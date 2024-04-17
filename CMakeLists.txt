@@ -26,6 +26,8 @@ add_executable(${PROJECT_NAME}
   src/main.cc
   src/server/endpoints.cc
   src/server/endpoints.h
+  src/database/wrapper.cc
+  src/database/wrapper.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Crow::Crow ${PostgreSQL_LIBRARIES})
