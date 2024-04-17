@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <postgresql/libpq-fe.h>
 #include <cstdint>
 
 namespace fm {
@@ -25,8 +26,11 @@ struct Film {
 class EndPoints {
  public:
   EndPoints();
+  ~EndPoints();
   response AddActor(const Actor& actor);
   std::string GetActors();
+ private:
+  PGconn* database;
 };
 
 }  // namespace fm
