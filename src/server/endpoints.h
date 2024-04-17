@@ -7,7 +7,7 @@
 
 namespace fm {
 
-using response = std::pair<int32_t, std::string>;
+using response = std::pair<int32_t, std::string>; // <code, body>
 
 struct Actor {
   std::string name;
@@ -28,7 +28,7 @@ class EndPoints {
   EndPoints();
   ~EndPoints();
   response AddActor(const Actor& actor);
-  std::string GetActors();
+  response GetActors();
  private:
   PGconn* database;
 };

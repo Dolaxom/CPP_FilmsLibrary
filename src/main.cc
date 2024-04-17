@@ -9,7 +9,11 @@ int main(int, char**) {
   fm::EndPoints endpoints;
 
   CROW_ROUTE(app, "/actors").methods(crow::HTTPMethod::Get)([&]() {
-    return "GET request to /user";
+    auto [code, body] = endpoints.GetActors();
+
+    crow::response response(code, body);
+    response.set_header("Content-Type", "application/json");
+    return response;
   });
 
   CROW_ROUTE(app, "/actors").methods(crow::HTTPMethod::Post)([&](const crow::request& request) {
