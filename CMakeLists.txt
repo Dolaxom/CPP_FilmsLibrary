@@ -30,4 +30,5 @@ add_executable(${PROJECT_NAME}
   src/database/wrapper.h
 )
 
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_link_libraries(${PROJECT_NAME} PRIVATE Crow::Crow ${PostgreSQL_LIBRARIES})
