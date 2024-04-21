@@ -1,6 +1,10 @@
 #pragma once
 
+#ifdef __APPLE__
+#include "libpq-fe.h"
+#else
 #include <postgresql/libpq-fe.h>
+#endif
 
 #include <string>
 
