@@ -2,13 +2,14 @@
 
 #include "iostream"
 #include "json.hpp"
+#include "../utils/utils.h"
 
 using json = nlohmann::json;
 
 namespace fm {
 
 EndPoints::EndPoints() :
-  database("host=localhost port=5433 dbname=filmoteka user=postgres password=admin") { }
+  database(Utils::ParseDatabaseConfig()) { }
 
 response EndPoints::AddActor(const Actor &actor) {
   json response;

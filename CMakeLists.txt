@@ -28,6 +28,7 @@ add_executable(${PROJECT_NAME}
   src/server/endpoints.h
   src/database/wrapper.cc
   src/database/wrapper.h
+  src/utils/utils.h
 )
 
 if(APPLE)
