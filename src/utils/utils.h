@@ -9,8 +9,8 @@ namespace fm {
 
 class Utils {
  public:
-  static std::string ParseDatabaseConfig() {
-    std::ifstream config{std::filesystem::path{"src/data/database.conf"}};
+  static std::string GetDatabaseConfig(std::filesystem::path path) {
+    std::ifstream config{path};
     if (!config.is_open()) {
       throw std::runtime_error("Can't open database config file");
     }

@@ -5,11 +5,12 @@
 #include "../utils/utils.h"
 
 using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 namespace fm {
 
 EndPoints::EndPoints() :
-  database(Utils::ParseDatabaseConfig()) { }
+  database(Utils::GetDatabaseConfig(fs::path{".local/database.conf"})) { }
 
 response EndPoints::AddActor(const Actor &actor) {
   json response;
