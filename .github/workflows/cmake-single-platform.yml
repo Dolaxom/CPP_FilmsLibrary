@@ -25,6 +25,9 @@ jobs:
     - name: Install libpq-dev
       run: sudo apt-get install libpq-dev
 
+    - name: Install Asio
+      run: sudo apt-get install libasio-dev
+
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build
 
