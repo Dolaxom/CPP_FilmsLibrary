@@ -1,5 +1,4 @@
-#include <stdio.h>
-
+#include "utils/logger.h"
 #include "server.h"
 #include "endpoints/endpoints.h"
 #include "json.hpp"
@@ -20,7 +19,7 @@ int32_t Server::Start() {
 
     app.port(18080).multithreaded().run();
   } catch (const std::exception& ex) {
-    std::cerr << ex.what() << std::endl;
+    Logger::Get().Write(ex.what());
     return 1;
   } catch (...) {
     return 2;

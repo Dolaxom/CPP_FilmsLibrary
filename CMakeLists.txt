@@ -29,6 +29,7 @@ add_executable(${PROJECT_NAME}
   src/database/wrapper.cc
   src/database/wrapper.h
   src/utils/utils.h
+  src/utils/logger.h
   src/server/server.cc
   src/server/server.h
 )
