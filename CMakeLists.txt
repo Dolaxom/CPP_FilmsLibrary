@@ -10,10 +10,6 @@ set(CMAKE_CXX_STANDARD 20)
 # Директория создания исполняемого файла
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Поиск Crow и PostgreSQL
-find_package(Crow REQUIRED)
-find_package(PostgreSQL REQUIRED)
-
 # Включение каталогов с заголовочными файлами Crow и PostgreSQL
 include_directories("third-party/Crow/include")
 include_directories("third-party/json_nlohmann")
@@ -21,6 +17,10 @@ include_directories(${PostgreSQL_INCLUDE_DIRS})
 
 # Добавление директорий для коротких записей инклюдов
 include_directories(src)
+
+# Поиск Crow и PostgreSQL
+find_package(Crow PATHS "${CMAKE_CURRENT_SOURCE_DIR}/third-party/Crow/cmake")
+find_package(PostgreSQL REQUIRED)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
