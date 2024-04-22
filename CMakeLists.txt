@@ -24,11 +24,13 @@ include_directories(src)
 
 add_executable(${PROJECT_NAME}
   src/main.cc
-  src/server/endpoints.cc
-  src/server/endpoints.h
+  src/server/endpoints/endpoints.cc
+  src/server/endpoints/endpoints.h
   src/database/wrapper.cc
   src/database/wrapper.h
   src/utils/utils.h
+  src/server/server.cc
+  src/server/server.h
 )
 
 if(APPLE)

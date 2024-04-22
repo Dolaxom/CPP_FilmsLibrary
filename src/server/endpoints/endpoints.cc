@@ -2,17 +2,17 @@
 
 #include "iostream"
 #include "json.hpp"
-#include "../utils/utils.h"
+#include "../../utils/utils.h"
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 
 namespace fm {
 
-EndPoints::EndPoints() :
+EndPointsHandler::EndPointsHandler() :
   database(Utils::GetDatabaseConfig(fs::path{".local/database.conf"})) { }
 
-response EndPoints::AddActor(const Actor &actor) {
+response EndPointsHandler::AddActor(const Actor &actor) {
   json response;
   response["message"] = "Successfully adding a new user " + actor.name;
   const char *paramValues[3] = {actor.name.c_str(), actor.gender.c_str(), actor.date.c_str()};
@@ -23,7 +23,7 @@ response EndPoints::AddActor(const Actor &actor) {
   return {200, response.dump(4)};
 }
 
-response EndPoints::GetActors() {
+response EndPointsHandler::GetActors() {
   json response;
 
   PGresult* res = executeQuery(database, "SELECT * FROM actor");

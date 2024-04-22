@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "../database/wrapper.h"
+#include "../../database/wrapper.h"
 #include <cstdint>
 
 namespace fm {
@@ -23,9 +23,9 @@ struct Film {
   std::vector<std::string> ids;  // of actors
 };
 
-class EndPoints {
+class EndPointsHandler {
  public:
-  EndPoints();
+  EndPointsHandler();
   response AddActor(const Actor& actor);
   response GetActors();
  private:
