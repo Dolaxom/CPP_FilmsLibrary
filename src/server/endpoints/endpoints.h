@@ -16,11 +16,11 @@ struct Actor {
 };
 
 struct Film {
-  std::string id;
   std::string title;
   std::string description;
+  std::string release_date;
   std::string rating;
-  std::vector<std::string> ids;  // of actors
+  std::string ids;  // of actors
 };
 
 class EndPointsHandler {
@@ -28,6 +28,8 @@ class EndPointsHandler {
   EndPointsHandler();
   response AddActor(const Actor& actor);
   response GetActors();
+  response AddFilm(const Film& film);
+  response GetFilms();
  private:
   PGConnection database;
 };

@@ -38,16 +38,35 @@ void Server::Actors() {
   });
 
   CROW_ROUTE(app, "/actors").methods(crow::HTTPMethod::Post)([&](const crow::request& request) {
-        json req = json::parse(request.body);
+    json req = json::parse(request.body);
 
-        Actor actor{req["name"], req["gender"], req["date"]};
-        auto [code, body] = endpointsHandler.AddActor(actor);
+    Actor actor{req["name"], req["gender"], req["date"]};
+    auto [code, body] = endpointsHandler.AddActor(actor);
 
-        crow::response response(code, body);
-        response.set_header("Content-Type", "application/json");
-        return response;
-      });
+    crow::response response(code, body);
+    response.set_header("Content-Type", "application/json");
+    return response;
+  });
 }
-void Server::Films(){/* TODO */};
+void Server::Films() {
+  CROW_ROUTE(app, "/films").methods(crow::HTTPMethod::Get)([&]() {
+    auto [code, body] = endpointsHandler.GetFilms();
+
+    crow::response response(code, body);
+    response.set_header("Content-Type", "application/json");
+    return response;
+  });
+
+  CROW_ROUTE(app, "/films").methods(crow::HTTPMethod::Post)([&](const crow::request& request) {
+    json req = json::parse(request.body);
+
+    Film film{req["title"], req["desription"], req["date"], req["rating"], req["actors"]};
+    auto [code, body] = endpointsHandler.AddFilm(film);
+
+    crow::response response(code, body);
+    response.set_header("Content-Type", "application/json");
+    return response;
+  });
+}
 
 }  // namespace fm

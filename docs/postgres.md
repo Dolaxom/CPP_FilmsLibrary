@@ -1,5 +1,5 @@
 ## commands:
 
-CREATE DATABASE Filmoteka;
+CREATE DATABASE filmoteka;
 
-sudo -u postgres psql -d Filmoteka
+sudo -u postgres psql -d filmoteka
