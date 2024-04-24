@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Фильмотека API
+  version: 1.0.0
+  
+servers:
+  - url: http://localhost:18080/
+    description: api server
+  
+paths:
+  /actors:
+    get:
+      summary: Получение списка актёров
+      tags:
+        - Actors
+      responses:
+        '200':
+          description: Успешное получение списка актёров
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Actors"
+        'default':
+          description: Ошибка
+
+    post:
+      summary: добавить актёра
+      tags:
+        - Actors
+      responses:
+        '200':
+          description: Успешное добавление
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Actors"
+        'default':
+          description: Ошибка
+
+components:
+  schemas:
+    Actor:
+      type: object
+      required:
+        - actorname
+        - gender
+        - birthday
+      properties:
+        id:
+          type: string
+        actorname:
+          type: string
+        gender:
+          type: string
+          enum:
+            - man
+            - woman
+        birthday:
+            type: string
+
+    Actors:
+      type: array
+      items:
+        $ref: "#/components/schemas/Actor"
