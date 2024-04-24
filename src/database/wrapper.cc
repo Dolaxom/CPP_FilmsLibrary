@@ -24,7 +24,7 @@ void prepare(PGConnection& database, const std::string& type, const std::string&
   PGresult* res = PQprepare(database.database, type.c_str(), query.c_str(), count, paramTypes);
   if (PQresultStatus(res) != PGRES_COMMAND_OK) {
     PQclear(res);
-    throw std::runtime_error(PQerrorMessage(database.database));
+    throw std::runtime_error(std::string("prepare(): ") + PQerrorMessage(database.database));
   }
   PQclear(res);
 }
@@ -33,7 +33,7 @@ void execPrepared(PGConnection& database, const std::string& type, int32_t count
   PGresult* res = PQexecPrepared(database.database, type.c_str(), count, paramValues, nullptr, nullptr, 0);
   if (PQresultStatus(res) != PGRES_COMMAND_OK) {
     PQclear(res);
-    throw std::runtime_error(PQerrorMessage(database.database));
+    throw std::runtime_error(std::string("execPrepared(): ") + PQerrorMessage(database.database));
   }
   PQclear(res);
 }
