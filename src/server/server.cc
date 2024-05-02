@@ -2,14 +2,14 @@
 #include "server.h"
 #include "endpoints/endpoints.h"
 #include "json.hpp"
+#include "tests/tests.h"
 
 using json = nlohmann::json;
 
 namespace fm {
 
 void Server::Testing() {
-  // TODO
-  // google tests or Catch2
+  runGTests(); 
 }
 
 int32_t Server::Start() {

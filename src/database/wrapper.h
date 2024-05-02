@@ -6,7 +6,10 @@
 #include <postgresql/libpq-fe.h>
 #endif
 
+#include "json.hpp"
 #include <string>
+
+using json = nlohmann::json;
 
 namespace fm {
 
@@ -29,6 +32,8 @@ class PGConnection {
                            int32_t count, const char* const* paramValues);
 
   friend PGresult* executeQuery(PGConnection& database, const std::string& query);
+
+  friend json get(PGConnection& database, const std::string& query);
 };
 
 }  // namespace fm
