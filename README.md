@@ -20,3 +20,10 @@ CrowCPP, PostgreSQL, libpq++, json_nlohmamn.
 ---
 
 Код написан в соответствии с Google Style и использованием компонентов языка C++17. Есть подключенный CI для проверки сборки проекта и описание в формате Swagger 2.0.
+
+---
+
+Архитектура классов сервера:
+
+![server](https://github.com/Dolaxom/CPP_FilmsLibrary/assets/51160711/88ca0844-c6b0-4848-b58d-8139115d6346)
+
