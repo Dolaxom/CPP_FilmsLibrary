@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-
+#include <memory>
 #include "crow.h"
 #include "endpoints/endpoints.h"
 

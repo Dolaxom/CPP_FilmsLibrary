@@ -4,6 +4,10 @@
 #include <fstream>
 #include <stdexcept>
 #include <string>
+#include "json.hpp"
+#include "server/endpoints/endpoints.h"
+
+using json = nlohmann::json;
 
 namespace fm {
 
@@ -23,6 +27,22 @@ class Utils {
     }
 
     return result;
+  }
+
+  static Actor JsonBodyToActor(std::string_view content) {
+    json req = json::parse(content);
+    json err;
+    if (req.find("name") == req.end()) {
+      err["description"] = "Can`t find name";
+    } else if (req.find("gender") == req.end()) {
+      err["description"] = "Can`t find gender";
+    } else if (req.find("date") == req.end()) {
+      err["description"] = "Can`t find date";
+    }
+
+    if (err.find("description") != err.end()) throw std::runtime_error(err.dump());
+
+    return Actor{req["name"], req["gender"], req["date"]};
   }
 };
 

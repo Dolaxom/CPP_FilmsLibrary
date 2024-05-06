@@ -1,10 +1,7 @@
-#include "utils/logger.h"
 #include "server.h"
-#include "endpoints/endpoints.h"
-#include "json.hpp"
+#include "utils/utils.h"
+#include "utils/logger.h"
 #include "tests/tests.h"
-
-using json = nlohmann::json;
 
 namespace fm {
 
@@ -37,14 +34,20 @@ void Server::Actors() {
     return response;
   });
 
-  CROW_ROUTE(app, "/actors").methods(crow::HTTPMethod::Post)([&](const crow::request& request) {
-    json req = json::parse(request.body);
-
-    Actor actor{req["name"], req["gender"], req["date"]};
-    auto [code, body] = endpointsHandler.AddActor(actor);
-
-    crow::response response(code, body);
+  CROW_ROUTE(app, "/actors").methods(crow::HTTPMethod::Post)([&](const crow::request& request) {\
+    crow::response response;
     response.set_header("Content-Type", "application/json");
+
+    try {
+      auto actor = Utils::JsonBodyToActor(request.body);  
+      auto [code, body] = endpointsHandler.AddActor(actor);
+      response.code = code;
+      response.body = body;
+    } catch (const std::exception& ex) {
+      response.code = 500;
+      response.body = ex.what();
+    }
+
     return response;
   });
 }
