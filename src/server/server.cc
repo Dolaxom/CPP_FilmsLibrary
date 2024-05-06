@@ -25,6 +25,8 @@ int32_t Server::Start() {
   return 0;
 }
 
+//! @brief /actors endpoint
+//! GET/POST
 void Server::Actors() {
   CROW_ROUTE(app, "/actors").methods(crow::HTTPMethod::Get)([&]() {
     auto [code, body] = endpointsHandler.GetActors();
@@ -51,6 +53,9 @@ void Server::Actors() {
     return response;
   });
 }
+
+//! @brief /films endpoint
+//! GET/POST
 void Server::Films() {
   CROW_ROUTE(app, "/films").methods(crow::HTTPMethod::Get)([&]() {
     auto [code, body] = endpointsHandler.GetFilms();
