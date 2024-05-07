@@ -66,13 +66,19 @@ void Server::Films() {
   });
 
   CROW_ROUTE(app, "/films").methods(crow::HTTPMethod::Post)([&](const crow::request& request) {
-    json req = json::parse(request.body);
-
-    Film film{req["title"], req["desription"], req["date"], req["rating"], req["actors"]};
-    auto [code, body] = endpointsHandler.AddFilm(film);
-
-    crow::response response(code, body);
+    crow::response response;
     response.set_header("Content-Type", "application/json");
+
+    try {
+      auto film = Utils::JsonBodyToFilm(request.body);  
+      auto [code, body] = endpointsHandler.AddFilm(film);
+      response.code = code;
+      response.body = body;
+    } catch (const std::exception& ex) {
+      response.code = 500;
+      response.body = ex.what();
+    }
+
     return response;
   });
 }
