@@ -14,7 +14,7 @@
 ---
 
 ## Стек
-CrowCPP, PostgreSQL, libpq++, json_nlohmamn.
+Redis, PostgreSQL, Crow++, json_nlohmamn.
 
 ---
 
