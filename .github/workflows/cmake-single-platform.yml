@@ -29,7 +29,7 @@ jobs:
       run: sudo apt-get install libasio-dev
 
     - name: Install Redis
-      run: sudo apt-get insstall redis
+      run: sudo apt-get install redis
 
     - name: Install hiredis lib
       run: sudo apt-get install libhiredis-dev
