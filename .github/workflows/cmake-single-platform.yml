@@ -28,6 +28,12 @@ jobs:
     - name: Install Asio
       run: sudo apt-get install libasio-dev
 
+    - name: Install Redis
+      run: sudo apt-get insstall redis
+
+    - name: Install hiredis lib
+      run: sudo apt-get install libhiredis-dev
+
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build
 
