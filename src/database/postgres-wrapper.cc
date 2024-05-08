@@ -1,4 +1,4 @@
-#include "wrapper.h"
+#include "postgres-wrapper.h"
 
 #include <stdexcept>
 

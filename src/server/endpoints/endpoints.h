@@ -2,7 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "../../database/wrapper.h"
+#include "database/postgres-wrapper.h"
+#include "database/redis-wrapper.h"
 #include <cstdint>
 
 namespace fm {
@@ -32,6 +33,7 @@ class EndPointsHandler {
   response GetFilms();
  private:
   PGConnection database;
+  Redis redis;
 };
 
 }  // namespace fm

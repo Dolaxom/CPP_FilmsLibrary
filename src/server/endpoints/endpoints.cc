@@ -11,7 +11,7 @@ namespace fs = std::filesystem;
 
 namespace fm {
 
-EndPointsHandler::EndPointsHandler() : database(Utils::GetDatabaseConfig(fs::path{".local/database.conf"})) { 
+EndPointsHandler::EndPointsHandler() : database{Utils::GetDatabaseConfig(fs::path{".local/database.conf"})}, redis{"127.0.0.1", 6379} { 
   prepare(database, "add_actor", "INSERT INTO actor (actorname, gender, birthday) VALUES ($1, $2, $3)", 3, nullptr);
   prepare(database, "add_film", "INSERT INTO film (title, description, release_date, rating, actors) VALUES ($1, $2, $3, $4, $5)", 5, nullptr);
 }
@@ -19,33 +19,48 @@ EndPointsHandler::EndPointsHandler() : database(Utils::GetDatabaseConfig(fs::pat
 response EndPointsHandler::AddActor(const Actor &actor) {
   json response;
   response["message"] = "Successfully adding a new user " + actor.name;
-  const char *paramValues[3] = {actor.name.c_str(), actor.gender.c_str(), actor.date.c_str()};
+  constexpr int32_t paramsCount = 3;
+  const char *paramValues[paramsCount] = {actor.name.c_str(), actor.gender.c_str(), actor.date.c_str()};
 
-  execPrepared(database, "add_actor", 3, paramValues);
+  execPrepared(database, "add_actor", paramsCount, paramValues);
 
   return {200, response.dump(JSON_DUMP)};
 }
 
 response EndPointsHandler::GetActors() {
+  if (auto content = get(redis, "actors"); content.first == REDIS_REPLY_STRING) {
+    return {200, content.second};
+  } else {
   json response = get(database, "SELECT * FROM actor");
-
-  return {200, response.dump(JSON_DUMP)};
+    std::string responseStr =  response.dump(JSON_DUMP);
+    set(redis, "actors", responseStr);
+    return {200, responseStr};  
+  }
+  return {500, "Redis/Postgres error."};
 }
 
 response EndPointsHandler::AddFilm(const Film& film) {
   json response;
   response["message"] = "Successfully adding a new film " + film.title;
-  const char *paramValues[5] = {film.title.c_str(), film.description.c_str(), film.release_date.c_str(), film.rating.c_str(), film.ids.c_str()};
+  constexpr int32_t paramsCount = 5;
+  const char *paramValues[paramsCount] = {film.title.c_str(), film.description.c_str(), film.release_date.c_str(), film.rating.c_str(), film.ids.c_str()};
 
-  execPrepared(database, "add_film", 5, paramValues);
+  execPrepared(database, "add_film", paramsCount, paramValues);
 
   return {200, response.dump(JSON_DUMP)};
 }
 
 response EndPointsHandler::GetFilms() {
-  json response = get(database, "SELECT f.id, f.title, f.description, f.release_date, f.rating, array_agg(a.actorname) AS actors FROM film f LEFT JOIN actor a ON a.id = ANY(f.actors) GROUP BY f.id;");
+  if (auto content = get(redis, "films"); content.first == REDIS_REPLY_STRING) {
+    return {200, content.second};
+  } else {
+    json response = get(database, "SELECT f.id, f.title, f.description, f.release_date, f.rating, array_agg(a.actorname) AS actors FROM film f LEFT JOIN actor a ON a.id = ANY(f.actors) GROUP BY f.id;");
+    std::string responseStr =  response.dump(JSON_DUMP);
+    set(redis, "films", responseStr);
+    return {200, responseStr};  
+  }
 
-  return {200, response.dump(JSON_DUMP)};
+  return {500, "Redis/Postgres error."};
 }
 
 }  // namespace fm

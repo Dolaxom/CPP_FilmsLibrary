@@ -36,8 +36,10 @@ add_executable(${PROJECT_NAME}
   src/main.cc
   src/server/endpoints/endpoints.cc
   src/server/endpoints/endpoints.h
-  src/database/wrapper.cc
-  src/database/wrapper.h
+  src/database/postgres-wrapper.cc
+  src/database/postgres-wrapper.h
+  src/database/redis-wrapper.cc
+  src/database/redis-wrapper.h
   src/utils/utils.h
   src/utils/logger.h
   src/server/server.cc
@@ -51,4 +53,4 @@ if(APPLE)
 endif()
 
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${PostgreSQL_LIBRARIES} GTest::gtest_main)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${PostgreSQL_LIBRARIES} GTest::gtest_main -lhiredis)
