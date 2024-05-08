@@ -31,7 +31,7 @@ response EndPointsHandler::GetActors() {
   if (auto content = get(redis, "actors"); content.first == REDIS_REPLY_STRING) {
     return {200, content.second};
   } else {
-  json response = get(database, "SELECT * FROM actor");
+    json response = get(database, "SELECT * FROM actor");
     std::string responseStr =  response.dump(JSON_DUMP);
     set(redis, "actors", responseStr);
     return {200, responseStr};  
