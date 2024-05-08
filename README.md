@@ -14,7 +14,7 @@
 ---
 
 ## Стек
-Redis, PostgreSQL, Crow++, json_nlohmamn.
+Redis, Docker, PostgreSQL, Crow++, json_nlohmamn.
 
 ---
 
