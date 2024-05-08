@@ -34,5 +34,4 @@ CrowCPP, PostgreSQL, libpq++, json_nlohmamn.
 
 ---
 
-![server drawio](https://github.com/Dolaxom/CPP_FilmsLibrary/assets/51160711/7a0a18fa-2b41-4a84-afc5-12891bcc745a)
-
+![server](https://github.com/Dolaxom/CPP_FilmsLibrary/assets/51160711/27c61de5-91a5-4661-89f0-1ed033d2a5e5)
